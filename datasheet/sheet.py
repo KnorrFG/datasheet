@@ -1,52 +1,18 @@
-from dataclasses import dataclass
 from functools import wraps
-from typing import Any
 
 import matplotlib.figure
 import nibabel as nib
 import pandas as pd
 from joblib import Memory
 
-
-@dataclass
-class ElementInterace:
-    content: Any
-
-@dataclass
-class MD(ElementInterace):
-    """Markdown"""
-    offset: int = -1
-
-@dataclass
-class Str(ElementInterace):
-    """String"""
-
-@dataclass
-class Repr(ElementInterace):
-    """Adds a repr() of the object"""
-
-@dataclass
-class DF(ElementInterace):
-    """pandas DataFrame"""
-
-@dataclass
-class Nifti(ElementInterace):
-    """nibabel.Nifti1Image"""
-
-@dataclass
-class Figure(ElementInterace):
-    """matplotlib.pyplot.figure"""
-
-
-def HTMLRenderer(entries, outdir):
-    pass
-
+from .html_renderer import render_html
+from .types import *
 
 class Sheet:
     def __init__(self, outdir):
-        self.outdir = outdir
+        self.outdir = Path(outdir)
         self.entries = []
-        self._mem = Memory(outdir)
+        self._mem = Memory(outdir, verbose=0)
 
     _type_wrap_map = {
         str: MD,
@@ -55,14 +21,22 @@ class Sheet:
         matplotlib.figure.Figure: Figure
     }
 
-    def __lshift__(self, obj):
-        try:
-            self.entries.append(obj if isinstance(obj, ElementInterace)
-                                else Sheet._type_wrap_map[type(obj)](obj))
-        except KeyError:
-            raise ValueError(f"Type {type(obj)} not supported")
+    @staticmethod
+    def _wrap_obj(obj):
+        return obj if isinstance(obj, ElementInterface) \
+            else Sheet._type_wrap_map.get(type(obj), Repr)(obj)
 
-    def render(self, renderer=HTMLRenderer):
+    def __lshift__(self, obj):
+        if type(obj) == MultiCell:
+            wrapped_obj = MultiCell(tuple(map(Sheet._wrap_obj, obj.content)))
+        else:
+            wrapped_obj = Sheet._wrap_obj(obj)
+
+        if hasattr(wrapped_obj, "save_to_dir"):
+            wrapped_obj.save_to_dir(self.outdir)
+        self.entries.append(wrapped_obj)
+
+    def render(self, renderer=render_html):
         renderer(self.entries, self.outdir)
 
     def cache(self, func):

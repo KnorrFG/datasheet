@@ -6,7 +6,7 @@ import nibabel as nib
 def compute_table(x):
     return pd.DataFrame({
         "x": list(range(x)),
-        "$x^2$": [x**2 for x in range(x)]
+        "x-sq": [x**2 for x in range(x)]
     })
 
 def test_1():
@@ -18,8 +18,7 @@ def test_1():
     * With Bulletpoints
     * One more
 
-        And Some *RAW* MD Code
-
+    `And Some *RAW* MD Code`
 
     ## Next we have a Raw-String representation
     """
@@ -36,11 +35,8 @@ def test_1():
     sheet << table.head()
     sheet << "### The Latex code:"
     sheet << Str(table.to_latex(index=False))
-    sheet << MD("""
-        ## A Matplotlib figure
-        (btw this text will be indented, because we specify the offset manually)
-        """, offset=4)
-    plt.plot(table.x, table["$x^2$"])
+    sheet << "## A Matplotlib figure"
+    plt.plot(table.x, table["x-sq"])
     sheet << plt.gcf()
     sheet << "## We even have a nifti viewer"
     sheet << nib.load("test/foo.nii")
@@ -51,3 +47,7 @@ def test_2():
     sheet = Sheet("./test_out")
     cached_func = sheet.cache(compute_table)
     cached_func.clear()
+
+
+if __name__ == "__main__":
+    test_1()

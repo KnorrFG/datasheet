@@ -1,0 +1,84 @@
+body{
+    /* background-color: rgb(237, 244, 245) */
+}
+
+#toc{
+    position: fixed;
+    top: 1cm;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+#toc a{
+    text-decoration:none;
+    white-space: nowrap;
+}
+
+#toc a:visited{
+    color:blue;
+}
+
+#container {
+    margin-left: 10cm;
+    /* margin-right: auto; */
+    max-width: 20cm;
+    border-radius: 0.5cm;
+    padding: 0.5cm;
+}
+
+.entry{
+    overflow-x: auto;
+}
+
+img {
+    max-width:100%;
+}
+
+div.indexindent_1{
+    text-indent: 0.5cm;
+}
+
+div.indexindent_2{
+    text-indent: 1cm;
+}
+
+div.indexindent_3{
+    text-indent: 1.5cm;
+}
+
+div.indexindent_4{
+    text-indent: 2cm;
+}
+
+div.indexindent_5{
+    text-indent: 2.5cm;
+}
+
+div.indexindent_6{
+    text-indent: 3cm;
+}
+
+/* Pandas Stuff */ 
+table.dataframe{
+    margin: 0;
+    font-family: "Helvetica", "Arial", sans-serif;
+    border-collapse: collapse;
+    border: none;
+    border: 2px solid #ccf;
+}   thead {
+    background-color: #cc8484;
+}   tbody tr:nth-child(even) {
+    background-color: #fff;
+}   tbody tr:nth-child(odd) {
+    background-color: #eee;
+}   td {
+    padding: .5em;
+}   th {
+    font-size: 125%;
+    text-align: center;
+}   caption {
+    caption-side: bottom;
+}   tbody tr:hover {
+    background-color: #add8e6;
+}

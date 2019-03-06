@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: data-sheet
+Version: 0.1
+Summary: A html page generator to present scientific results
+Home-page: knorrfg.github.io
+Author: Felix Knorr
+Author-email: felix.knorr@tu-dresden.de
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.7
