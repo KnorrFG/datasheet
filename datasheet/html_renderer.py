@@ -20,7 +20,7 @@ def _print_to_html(s):
 
 def _figure_to_html(fig: Figure):
     doc = Doc()
-    doc.stag("img", src=fig.rel_save_path)
+    doc.stag("img", src=fig.rel_save_path, width=f"{fig.scale * 100}%")
     return doc.getvalue()
 
 
@@ -44,9 +44,14 @@ class _PapayaHelper:
     
 
 def _render_multicell(cell, transformers):
-    return '<div style="display: flex; flex-direction: row; margin: 10px 0 ">' \
-        + "&emsp;".join(transformers[type(entry)](entry) for entry in cell.content)\
-        + '</div>'
+    doc, tag, text = Doc().tagtext()
+    with tag("div", style="display: flex; flex-direction: row; margin: 10px 0;"):
+        for entry in cell.content:
+            with tag('div', klass='entry'):
+                doc.asis(transformers[type(entry)](entry))
+            doc.asis("&emsp;")
+        
+    return doc.getvalue()
 
 
 def _is_single_line_md_heading(entry):
@@ -80,7 +85,7 @@ class _MDHeaderMaker:
         return doc.getvalue()
 
 def render_html(entries, outdir, style_sheet="default.css", index_md=True, 
-                max_index_len=20):
+                max_index_len=25):
     header_parser = _MDHeaderMaker()
     _transformers = {
         DF: lambda s: s.content._repr_html_(),
@@ -105,6 +110,7 @@ def render_html(entries, outdir, style_sheet="default.css", index_md=True,
     with tag('html'):
         with tag('head'):
             line("title", outdir.name)
+            doc.stag("meta", charset="UTF-8")
             with tag("script", type="text/javascript"):
                 doc.asis(read_text("datasheet.data", "positions.js"))
             with tag('style'):
@@ -116,6 +122,7 @@ def render_html(entries, outdir, style_sheet="default.css", index_md=True,
             
         with tag('body', onload="fixPosition();"):
             with tag('div', id="toc"):
+                line("div", "Contents", id="toc_header")
                 doc.asis(_make_toc(entries, max_index_len))
             with tag('div', id='container'):
                 for entry in entries:

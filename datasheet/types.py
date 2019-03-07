@@ -27,7 +27,7 @@ class MD(ElementInterface):
     def __post_init__(self, offset):
         if offset < 0:
             offset = min(len(line) - len(line.lstrip())
-                         for line in self.content.split("\n") if len(line) > 0)
+                         for line in self.content.split("\n") if len(line.strip()) > 0)
         if offset > 0:
             self.content = _map_lines(lambda s: s[offset:], self.content)
 
@@ -67,6 +67,7 @@ class Figure(ElementInterface):
     bbox_inches: str = "tight"
     transparent: bool = True
     extension: str = "png"
+    scale: float = 0.7
 
     def save_to_dir(self, target_dir):
         out_file = self.get_outfile(target_dir, self.extension)

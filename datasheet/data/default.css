@@ -1,62 +1,72 @@
-body{
-    /* background-color: rgb(237, 244, 245) */
-}
-
 #toc{
     position: fixed;
-    top: 1cm;
+    top: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 100%;
+    height: 96%;
+    background-image: -webkit-linear-gradient(top, rgb(22, 153, 214) 2em, rgb(203, 220, 235) 1em);
+    border-radius: 1em;
+    padding: 0.5em;
+    margin: 0.5em;
+    box-shadow: 0.2em 0.2em rgb(80, 83, 83);
 }
 
 #toc a{
     text-decoration:none;
     white-space: nowrap;
+    color:rgb(1, 1, 5);
+    font-weight: bold;
+}
+
+#toc_header{
+    font-weight: bold;
+    padding-bottom: 1em;
 }
 
 #toc a:visited{
-    color:blue;
+    color:rgb(1, 1, 5);
 }
 
 #container {
-    margin-left: 10cm;
+    margin-left: 10em;
     /* margin-right: auto; */
-    max-width: 20cm;
-    border-radius: 0.5cm;
-    padding: 0.5cm;
+    max-width: 50em;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    padding-left: 1em;
 }
 
 .entry{
     overflow-x: auto;
 }
 
-img {
+.entry img {
     max-width:100%;
+    height: auto;
 }
 
 div.indexindent_1{
-    text-indent: 0.5cm;
+    text-indent: 0em;
 }
 
 div.indexindent_2{
-    text-indent: 1cm;
+    text-indent: 0.5em;
 }
 
 div.indexindent_3{
-    text-indent: 1.5cm;
+    text-indent: 1em;
 }
 
 div.indexindent_4{
-    text-indent: 2cm;
+    text-indent: 1.5em;
 }
 
 div.indexindent_5{
-    text-indent: 2.5cm;
+    text-indent: 2em;
 }
 
 div.indexindent_6{
-    text-indent: 3cm;
+    text-indent: 2.5em;
 }
 
 /* Pandas Stuff */ 

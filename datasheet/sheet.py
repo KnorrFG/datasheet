@@ -26,14 +26,20 @@ class Sheet:
         return obj if isinstance(obj, ElementInterface) \
             else Sheet._type_wrap_map.get(type(obj), Repr)(obj)
 
+    def _store_if_has_save_dir(self, obj):
+        if hasattr(obj, "save_to_dir"):
+            obj.save_to_dir(self.outdir)
+
     def __lshift__(self, obj):
-        if type(obj) == MultiCell:
-            wrapped_obj = MultiCell(tuple(map(Sheet._wrap_obj, obj.content)))
+        if type(obj) in (MultiCell, tuple):
+            objs = obj.content if type(obj) == MultiCell else obj
+            wrapped_obj = MultiCell(tuple(map(Sheet._wrap_obj, objs)))
+            for obj in wrapped_obj.content:
+                self._store_if_has_save_dir(obj)
         else:
             wrapped_obj = Sheet._wrap_obj(obj)
 
-        if hasattr(wrapped_obj, "save_to_dir"):
-            wrapped_obj.save_to_dir(self.outdir)
+        self._store_if_has_save_dir(wrapped_obj)
         self.entries.append(wrapped_obj)
 
     def render(self, renderer=render_html):
