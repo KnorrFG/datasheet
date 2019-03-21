@@ -8,20 +8,46 @@ def _map_lines(func, s):
 
 @dataclass
 class ElementInterface:
+    """Base class for all other Interfaces.
+
+    To add an interface, 3 steps are neccessary:
+    
+    1. Define a class for it, which is derived from ElementInterface.
+        If it has a method named 'save_to_dir' which takes one argument: the
+        output directory, it will be called by 
+        `datasheet.sheet.Sheet.__lshift__`. This way it
+        is possible to save files, that can be used in the render-handlers.
+    2. Optionally define a mapping for a type to be wrapped automatically with
+       your new interface by 
+       `datasheet.sheet.Sheet.__lshift__` in :code:`Sheet.type_wrap_map`
+    
+    :param Any content: the actual element
+    :param Path rel_save_path: the output path in case a file should be stored,
+        if not set, it can be assigned automatically using 
+        `ElementInterface.get_outfile`
+    """
     content: Any
     rel_save_path: Path = None
-    save_counter: ClassVar[int] = 0
+    _save_counter: ClassVar[int] = 0
 
     def get_outfile(self, target_dir: Path, ext: str):
+        """returns a path for a file, that was not yet used.
+
+        :param Path target_dir: The output directory
+        :param str ext: The file extension"""
         if self.rel_save_path is None:
-            ElementInterface.save_counter += 1
-            self.rel_save_path = f"{ElementInterface.save_counter}.{ext}"
+            ElementInterface._save_counter += 1
+            self.rel_save_path = f"{ElementInterface._save_counter}.{ext}"
         return target_dir / self.rel_save_path
 
 
 @dataclass
 class MD(ElementInterface):
-    """Markdown"""
+    """Markdown
+    
+    :param offset: the ammount of characters to strip of the left of each line.
+        Determined automatically if set to -1.
+    """
     offset: InitVar[int] = -1
 
     def __post_init__(self, offset):
@@ -33,7 +59,7 @@ class MD(ElementInterface):
 
 @dataclass
 class Str(ElementInterface):
-    """String"""
+    """String. Use this if you want add a string that is not interpreted as Markdown."""
 
 @dataclass
 class Repr(ElementInterface):
@@ -41,6 +67,11 @@ class Repr(ElementInterface):
 
 @dataclass
 class DF(ElementInterface):
+    """Pandas.DataFrame
+
+    :param str save_format: supports to either save the dataframe as latex-table
+        or csv-file. Valid values are "tex" and "csv"
+    """
     save_format: str = "tex"
 
     def save_to_dir(self, target_dir):
@@ -62,10 +93,15 @@ class Nifti(ElementInterface):
 
 @dataclass
 class Figure(ElementInterface):
-    """matplotlib.pyplot.figure"""
+    """matplotlib.pyplot.figure
+    
+    All arguments except scale are passed to matplotlib.figure.Figure.save_fig.
+    
+    :param float scale: can be used by the renderer as a relative size
+    """
     dpi: int = 300
     bbox_inches: str = "tight"
-    transparent: bool = True
+    transparent: bool = False
     extension: str = "png"
     scale: float = 0.7
 

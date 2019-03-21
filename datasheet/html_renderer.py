@@ -84,8 +84,17 @@ class _MDHeaderMaker:
         self.counter += 1
         return doc.getvalue()
 
-def render_html(entries, outdir, style_sheet="default.css", index_md=True, 
-                max_index_len=25):
+def render_html(entries, outdir: Path, style_sheet: str = "default.css", 
+                max_index_len: int = 25):
+    """ Renders a `Sheet` as HTML-page.
+
+    :param Path outdir: The outputfolder to store the page in, usually 
+        :code:`Sheet.outdir`.
+    :param str style_sheet: the css file to include in the page. It is
+        looked for in datasheet.data, currently this is the only valid value
+        for this parameter
+    :param int max_index_len: maximal number of characters a title can
+        have before its index is abreviated."""
     header_parser = _MDHeaderMaker()
     _transformers = {
         DF: lambda s: s.content._repr_html_(),

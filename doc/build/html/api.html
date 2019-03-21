@@ -1,0 +1,328 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Api Documentation &#8212; datasheet  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="api-documentation">
+<h1><a class="toc-backref" href="#id1">Api Documentation</a><a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#api-documentation" id="id1">Api Documentation</a><ul>
+<li><a class="reference internal" href="#sheet" id="id2">Sheet</a></li>
+<li><a class="reference internal" href="#types" id="id3">Types</a></li>
+<li><a class="reference internal" href="#renderer" id="id4">Renderer</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="sheet">
+<h2><a class="toc-backref" href="#id2">Sheet</a><a class="headerlink" href="#sheet" title="Permalink to this headline">¶</a></h2>
+<p>The Sheet is the container holding the information, that is then accessed by
+one of the renderers. A sheet also represents an output directory in which caches and
+generated files are stored</p>
+<span class="target" id="module-datasheet.sheet"></span><dl class="class">
+<dt id="datasheet.sheet.Sheet">
+<em class="property">class </em><code class="descclassname">datasheet.sheet.</code><code class="descname">Sheet</code><span class="sig-paren">(</span><em>outdir: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/sheet.html#Sheet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.sheet.Sheet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main class of the library</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>outdir</strong> (<em>str</em>) – The output directory, in which all files are stored.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><strong>type_wrap_map</strong> (<em>dict</em>) – Defines the mapping from input types to 
+<a class="reference internal" href="#datasheet.types.ElementInterface" title="datasheet.types.ElementInterface"><code class="xref any py py-class docutils literal notranslate"><span class="pre">ElementInterface</span></code></a> s. It is not possible to use tuple as key, as that will be
+ignored, because it is required for the special treatment the <a class="reference internal" href="#datasheet.types.MultiCell" title="datasheet.types.MultiCell"><code class="xref any py py-class docutils literal notranslate"><span class="pre">MultiCell</span></code></a>
+Interface needs</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="datasheet.sheet.Sheet.__lshift__">
+<code class="descname">__lshift__</code><span class="sig-paren">(</span><em>obj: Any</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/sheet.html#Sheet.__lshift__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.sheet.Sheet.__lshift__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object adding operator, automatically wraps passed objects into
+fitting type wrappers according to Sheet.type_wrap_map</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasheet.sheet.Sheet.add_current_figure">
+<code class="descname">add_current_figure</code><span class="sig-paren">(</span><em>clear: bool = True</em>, <em>**fig_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/sheet.html#Sheet.add_current_figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.sheet.Sheet.add_current_figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convinienve method to add the current figure, and optionally clear
+it afterwards.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Para bool clear:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">whether or not to clear the figue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Para fig_args:</th><td class="field-body">forwarded to <a class="reference internal" href="#datasheet.types.Figure" title="datasheet.types.Figure"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Figure</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasheet.sheet.Sheet.cache">
+<code class="descname">cache</code><span class="sig-paren">(</span><em>func</em>, <em>**cache_args</em><span class="sig-paren">)</span> &#x2192; joblib.memory.MemorizedFunc<a class="reference internal" href="_modules/datasheet/sheet.html#Sheet.cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.sheet.Sheet.cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Datasheet automatically creates a 
+<a class="reference external" href="https://joblib.readthedocs.io/en/latest/auto_examples/memory_basic_usage.html">joblib.Memory</a>
+object, with the outdir as cache dir, to have easy access to persistent
+caching. This method exposes the memory-object’s cache() method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasheet.sheet.Sheet.gate_cache">
+<code class="descname">gate_cache</code><span class="sig-paren">(</span><em>func</em>, <em>recompute</em>, <em>key=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/sheet.html#Sheet.gate_cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.sheet.Sheet.gate_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps a function. The returned function will execute the wrapped function 
+and store the results, if it does not find a saved result already.
+If recompute is True the wrapped function will also be executed if a saved 
+result is found. If a stored result is found, and recompute is False the wrapped
+function will always return the stored result, independent of the calling 
+parameters, or whether the source code of the cached function changed.</p>
+<p>the key parameter determines the save file. By default the name of the wrapped
+function is used. In case of wanting to save multiple results for one function,
+it can be wrapped multiple times with different keys</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasheet.sheet.Sheet.render">
+<code class="descname">render</code><span class="sig-paren">(</span><em>renderer=&lt;function render_html&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/sheet.html#Sheet.render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.sheet.Sheet.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the sheet to some sort of file(s).</p>
+<p>To customize render options use the renderfunction directly.
+Currently, the only existing renderer is the HTML renderer</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="types">
+<h2><a class="toc-backref" href="#id3">Types</a><a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<p>Every object that is added to a Sheet is wrapped in a Type-Object, which is derived
+from <a class="reference internal" href="#datasheet.types.ElementInterface" title="datasheet.types.ElementInterface"><code class="xref any py py-class docutils literal notranslate"><span class="pre">ElementInterface</span></code></a> . These classes purpose is to carry information on their
+contained data. If a Type has a <em>save_to_dir</em> function it will be called when the
+object is added to the sheet.</p>
+<span class="target" id="module-datasheet.types"></span><dl class="class">
+<dt id="datasheet.types.DF">
+<em class="property">class </em><code class="descclassname">datasheet.types.</code><code class="descname">DF</code><span class="sig-paren">(</span><em>content: Any</em>, <em>rel_save_path: pathlib.Path = None</em>, <em>save_format: str = 'tex'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#DF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.DF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pandas.DataFrame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>save_format</strong> (<em>str</em>) – supports to either save the dataframe as latex-table
+or csv-file. Valid values are “tex” and “csv”</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="datasheet.types.ElementInterface">
+<em class="property">class </em><code class="descclassname">datasheet.types.</code><code class="descname">ElementInterface</code><span class="sig-paren">(</span><em>content: Any</em>, <em>rel_save_path: pathlib.Path = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#ElementInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.ElementInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all other Interfaces.</p>
+<p>To add an interface, 3 steps are neccessary:</p>
+<ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>Define a class for it, which is derived from ElementInterface.</dt>
+<dd>If it has a method named ‘save_to_dir’ which takes one argument: the
+output directory, it will be called by 
+<a class="reference internal" href="#datasheet.sheet.Sheet.__lshift__" title="datasheet.sheet.Sheet.__lshift__"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">datasheet.sheet.Sheet.__lshift__</span></code></a>. This way it
+is possible to save files, that can be used in the render-handlers.</dd>
+</dl>
+</li>
+<li>Optionally define a mapping for a type to be wrapped automatically with
+your new interface by 
+<a class="reference internal" href="#datasheet.sheet.Sheet.__lshift__" title="datasheet.sheet.Sheet.__lshift__"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">datasheet.sheet.Sheet.__lshift__</span></code></a> in <code class="code docutils literal notranslate"><span class="pre">Sheet.type_wrap_map</span></code></li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>content</strong> (<em>Any</em>) – the actual element</li>
+<li><strong>rel_save_path</strong> (<em>Path</em>) – the output path in case a file should be stored,
+if not set, it can be assigned automatically using 
+<a class="reference internal" href="#datasheet.types.ElementInterface.get_outfile" title="datasheet.types.ElementInterface.get_outfile"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">ElementInterface.get_outfile</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="datasheet.types.ElementInterface.get_outfile">
+<code class="descname">get_outfile</code><span class="sig-paren">(</span><em>target_dir: pathlib.Path</em>, <em>ext: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#ElementInterface.get_outfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.ElementInterface.get_outfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a path for a file, that was not yet used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>target_dir</strong> (<em>Path</em>) – The output directory</li>
+<li><strong>ext</strong> (<em>str</em>) – The file extension</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="datasheet.types.Figure">
+<em class="property">class </em><code class="descclassname">datasheet.types.</code><code class="descname">Figure</code><span class="sig-paren">(</span><em>content: Any</em>, <em>rel_save_path: pathlib.Path = None</em>, <em>dpi: int = 300</em>, <em>bbox_inches: str = 'tight'</em>, <em>transparent: bool = False</em>, <em>extension: str = 'png'</em>, <em>scale: float = 0.7</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#Figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.Figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>matplotlib.pyplot.figure</p>
+<p>All arguments except scale are passed to matplotlib.figure.Figure.save_fig.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scale</strong> (<em>float</em>) – can be used by the renderer as a relative size</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="datasheet.types.MD">
+<em class="property">class </em><code class="descclassname">datasheet.types.</code><code class="descname">MD</code><span class="sig-paren">(</span><em>content: Any</em>, <em>rel_save_path: pathlib.Path = None</em>, <em>offset: dataclasses.InitVar = -1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#MD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.MD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Markdown</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>offset</strong> – the ammount of characters to strip of the left of each line.
+Determined automatically if set to -1.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="datasheet.types.MultiCell">
+<em class="property">class </em><code class="descclassname">datasheet.types.</code><code class="descname">MultiCell</code><span class="sig-paren">(</span><em>content: Any</em>, <em>rel_save_path: pathlib.Path = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#MultiCell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.MultiCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to use multiple elements in a Row. Takes a tuple as argument</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="datasheet.types.Nifti">
+<em class="property">class </em><code class="descclassname">datasheet.types.</code><code class="descname">Nifti</code><span class="sig-paren">(</span><em>content: Any</em>, <em>rel_save_path: pathlib.Path = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#Nifti"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.Nifti" title="Permalink to this definition">¶</a></dt>
+<dd><p>nibabel.Nifti1Image</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="datasheet.types.Repr">
+<em class="property">class </em><code class="descclassname">datasheet.types.</code><code class="descname">Repr</code><span class="sig-paren">(</span><em>content: Any</em>, <em>rel_save_path: pathlib.Path = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#Repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.Repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a repr() of the object</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="datasheet.types.Str">
+<em class="property">class </em><code class="descclassname">datasheet.types.</code><code class="descname">Str</code><span class="sig-paren">(</span><em>content: Any</em>, <em>rel_save_path: pathlib.Path = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/types.html#Str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.types.Str" title="Permalink to this definition">¶</a></dt>
+<dd><p>String. Use this if you want add a string that is not interpreted as Markdown.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="renderer">
+<h2><a class="toc-backref" href="#id4">Renderer</a><a class="headerlink" href="#renderer" title="Permalink to this headline">¶</a></h2>
+<p>Renderers are responsible for creating a final output file. Currentrly only the
+html_renderer exists, which is automatically called by <a class="reference internal" href="#datasheet.sheet.Sheet.render" title="datasheet.sheet.Sheet.render"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">datasheet.sheet.Sheet.render</span></code></a>
+but to configure the render process it is also possible to call it manually like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">renderer</span><span class="p">(</span><span class="n">sheet</span><span class="o">.</span><span class="n">entries</span><span class="p">,</span> <span class="n">sheet</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span> <span class="n">render_arg1</span><span class="p">,</span> <span class="n">render_arg2</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="target" id="module-datasheet.html_renderer"></span><dl class="function">
+<dt id="datasheet.html_renderer.render_html">
+<code class="descclassname">datasheet.html_renderer.</code><code class="descname">render_html</code><span class="sig-paren">(</span><em>entries</em>, <em>outdir: pathlib.Path</em>, <em>style_sheet: str = 'default.css'</em>, <em>max_index_len: int = 25</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasheet/html_renderer.html#render_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasheet.html_renderer.render_html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders a <a class="reference internal" href="#datasheet.sheet.Sheet" title="datasheet.sheet.Sheet"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Sheet</span></code></a> as HTML-page.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>outdir</strong> (<em>Path</em>) – The outputfolder to store the page in, usually 
+<code class="code docutils literal notranslate"><span class="pre">Sheet.outdir</span></code>.</li>
+<li><strong>style_sheet</strong> (<em>str</em>) – the css file to include in the page. It is
+looked for in datasheet.data, currently this is the only valid value
+for this parameter</li>
+<li><strong>max_index_len</strong> (<em>int</em>) – maximal number of characters a title can
+have before its index is abreviated.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Api Documentation</a><ul>
+<li><a class="reference internal" href="#sheet">Sheet</a></li>
+<li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#renderer">Renderer</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Felix G. Knorr.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
