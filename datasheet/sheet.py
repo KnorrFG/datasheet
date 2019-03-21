@@ -99,8 +99,8 @@ class Sheet:
         """Convinienve method to add the current figure, and optionally clear
         it afterwards.
         
-        :para bool clear: whether or not to clear the figue
-        :para fig_args: forwarded to `Figure`"""
+        :param bool clear: whether or not to clear the figue
+        :param fig_args: forwarded to `Figure`"""
         self << Figure(plt.gcf(), **fig_args)
         if clear:
             plt.clf()

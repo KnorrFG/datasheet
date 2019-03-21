@@ -32,12 +32,10 @@ result, and only recompute if it is explicitly told to do so.
 After you added everything you want in your output file you simply call
 :code:`sheet.render()` and an html file will be generated.
 
-Installation via pip:
-
-.. code-block::
+Installation via pip::
 
     pip install datasheet
-    
+
 
 Here is an example:
 

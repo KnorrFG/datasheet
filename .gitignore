@@ -4,3 +4,4 @@ test_out
 **/__pycache__
 **/.pytest_pycache
 **/.vscode
+dist
