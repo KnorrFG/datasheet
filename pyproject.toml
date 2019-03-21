@@ -1,0 +1,18 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "datasheet"
+author = "Felix G. Knorr"
+author-email = "knorr.felix@gmx.de"
+home-page = "https://github.com/KnorrFG/datasheet"
+classifiers = ["License :: OSI Approved :: MIT License"]
+requires = [
+    "markdown", 
+    "pandas", 
+    "yattag", 
+    "matplotlib", 
+    "nibabel", 
+    "joblib"]
+description-file="README.rst"
