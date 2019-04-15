@@ -1,6 +1,8 @@
 import pickle
 from functools import wraps
 
+import matplotlib
+matplotlib.use('agg')
 import matplotlib.figure
 import matplotlib.pyplot as plt
 import nibabel as nib
@@ -11,15 +13,17 @@ from joblib.memory import MemorizedFunc
 from .html_renderer import render_html
 from .types import *
 
+
 class Sheet:
     """Main class of the library
-    
+
     :param str outdir: The output directory, in which all files are stored.
     :var dict type_wrap_map: Defines the mapping from input types to 
         `ElementInterface` s. It is not possible to use tuple as key, as that will be
         ignored, because it is required for the special treatment the `MultiCell`
         Interface needs
     """
+
     def __init__(self, outdir: str):
         self.outdir = Path(outdir)
         self.entries = []
@@ -63,7 +67,7 @@ class Sheet:
         """
         renderer(self.entries, self.outdir)
 
-    def cache(self, func, **cache_args)-> MemorizedFunc:
+    def cache(self, func, **cache_args) -> MemorizedFunc:
         """Datasheet automatically creates a 
         `joblib.Memory <https://joblib.readthedocs.io/en/latest/auto_examples/memory_basic_usage.html>`_
         object, with the outdir as cache dir, to have easy access to persistent
@@ -77,7 +81,7 @@ class Sheet:
         result is found. If a stored result is found, and recompute is False the wrapped
         function will always return the stored result, independent of the calling 
         parameters, or whether the source code of the cached function changed.
-        
+
         the key parameter determines the save file. By default the name of the wrapped
         function is used. In case of wanting to save multiple results for one function,
         it can be wrapped multiple times with different keys"""
@@ -98,7 +102,7 @@ class Sheet:
     def add_current_figure(self, clear: bool = True, **fig_args):
         """Convinienve method to add the current figure, and optionally clear
         it afterwards.
-        
+
         :param bool clear: whether or not to clear the figue
         :param fig_args: forwarded to `Figure`"""
         self << Figure(plt.gcf(), **fig_args)

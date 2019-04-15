@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Welcome to datasheet’s documentation! &#8212; datasheet  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -13,7 +11,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -39,16 +37,16 @@ to generate nice, usable output files containing all sorts of information
 that might fall out of a scientific python script.
 The output is stored as html page. To a sheet you can easily add</p>
 <ul class="simple">
-<li>Strings containing Markdown “code”</li>
-<li>Pandas DataFrames</li>
-<li>Nibabel nifti images</li>
-<li>Matplotlib figures</li>
+<li><p>Strings containing Markdown “code”</p></li>
+<li><p>Pandas DataFrames</p></li>
+<li><p>Nibabel nifti images</p></li>
+<li><p>Matplotlib figures</p></li>
 </ul>
 <p>with a single line. Think jupyter without source-code. To give a similar
 developing speed as you have in jupyter datasheet has two cache-functions, which will
 cache the results of a function call. The first one,
-<code class="xref any docutils literal notranslate"><span class="pre">datasheet.sheet.Sheet.cache</span></code> is a wrapper around <a class="reference external" href="https://joblib.readthedocs.io/en/latest/auto_examples/memory_basic_usage.html">joblib.Memory</a>
-The second one, <code class="xref any docutils literal notranslate"><span class="pre">datasheet.sheet.Sheet.gate_cache</span></code> is pretty stupid, which can
+<a class="reference internal" href="api.html#datasheet.sheet.Sheet.cache" title="datasheet.sheet.Sheet.cache"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">datasheet.sheet.Sheet.cache</span></code></a> is a wrapper around <a class="reference external" href="https://joblib.readthedocs.io/en/latest/auto_examples/memory_basic_usage.html">joblib.Memory</a>
+The second one, <a class="reference internal" href="api.html#datasheet.sheet.Sheet.gate_cache" title="datasheet.sheet.Sheet.gate_cache"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">datasheet.sheet.Sheet.gate_cache</span></code></a> is pretty stupid, which can
 be handy too. The joblib cache is aware of the functions source-code and the
 arguments, and will rerun the function if one of these things changes. But it
 might very well be the case, that you want to change a thing in your source
@@ -58,6 +56,9 @@ result, and only recompute if it is explicitly told to do so.</p>
 <p>After you added everything you want in your output file you simply call
 <code class="code docutils literal notranslate"><span class="pre">sheet.render()</span></code> and an html file will be generated.</p>
 <p>Installation via pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">datasheet</span>
+</pre></div>
+</div>
 <p>Here is an example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasheet</span> <span class="kn">import</span> <span class="n">Sheet</span><span class="p">,</span> <span class="n">Repr</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">MD</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -131,7 +132,8 @@ result, and only recompute if it is explicitly told to do so.</p>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>You can find the details in the <a class="reference internal" href="api.html"><span class="doc">Api Documentation</span></a></p>
+<p>which will produce the following html file:</p>
+<iframe src="_static/test_out/index.html" height="1000em" width="100%"></iframe><p>You can find the details in the <a class="reference internal" href="api.html"><span class="doc">Api Documentation</span></a></p>
 </div>
 
 
@@ -149,7 +151,7 @@ result, and only recompute if it is explicitly told to do so.</p>
       &copy;2019, Felix G. Knorr.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

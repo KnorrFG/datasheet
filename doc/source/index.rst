@@ -113,7 +113,11 @@ Here is an example:
         main()
 
 
+which will produce the following html file:
 
+.. raw:: html
+
+    <iframe src="_static/test_out/index.html" height="1000em" width="100%"></iframe>
 
 You can find the details in the `api`
 
