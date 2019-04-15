@@ -1,6 +1,6 @@
 *.pyc
 .pytest_pycache
-test_out
+/test_out
 **/__pycache__
 **/.pytest_pycache
 **/.vscode
