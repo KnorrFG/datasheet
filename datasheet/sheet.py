@@ -42,7 +42,7 @@ class Sheet:
             else Sheet.type_wrap_map.get(type(obj), Repr)(obj)
 
     def _store_if_has_save_dir(self, obj):
-        if hasattr(obj, "save_to_dir"):
+        if hasattr(obj, "save_to_dir") and not obj.dont_save:
             obj.save_to_dir(self.outdir)
 
     def __lshift__(self, obj: Any):

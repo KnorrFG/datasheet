@@ -11,6 +11,24 @@ from yattag import Doc, indent
 from .types import DF, MD, Figure, Nifti, Repr, Str, MultiCell
 
 
+markdown_extensions = [
+    'markdown.extensions.extra',
+    'markdown.extensions.abbr',
+    'markdown.extensions.attr_list',
+    'markdown.extensions.def_list',
+    'markdown.extensions.fenced_code',
+    'markdown.extensions.footnotes',
+    'markdown.extensions.tables',
+    'markdown.extensions.admonition',
+    'markdown.extensions.codehilite',
+    'markdown.extensions.meta',
+    'markdown.extensions.nl2br',
+    'markdown.extensions.sane_lists',
+    'markdown.extensions.smarty',
+    'markdown.extensions.toc',
+    'markdown.extensions.wikilinks'
+]
+
 def _print_to_html(s):
     doc, tag, text = Doc().tagtext()
     with tag("pre"):
@@ -32,7 +50,7 @@ class _PapayaHelper:
     def get_papaya_header(self):
         return read_text('datasheet.data', "papaya_header.html") \
             + '<script type="text/javascript">' + ";".join(
-            [f'var param{i} = {{"images": ["{nii.rel_save_path}"]}}'
+            [f'var param{i} = {{"images": ["./{nii.rel_save_path}"]}}'
             for i, nii in enumerate(self.niftis)]
             ) + '</script>' + '<script type="text/javascript">' + \
             read_text("datasheet.data", "papaya.js") + '</script>'
@@ -100,7 +118,7 @@ def render_html(entries, outdir: Path, style_sheet: str = "default.css",
         DF: lambda s: s.content._repr_html_(),
         Figure: _figure_to_html,
         MD: lambda s: header_parser.get_header(s) if _is_single_line_md_heading(s)
-            else markdown(s.content),
+            else markdown(s.content, extensions=markdown_extensions),
         Nifti: None,
         Repr: lambda s: _print_to_html(repr(s.content)),
         Str: lambda s: _print_to_html(s.content)
@@ -120,8 +138,6 @@ def render_html(entries, outdir: Path, style_sheet: str = "default.css",
         with tag('head'):
             line("title", outdir.name)
             doc.stag("meta", charset="UTF-8")
-            with tag("script", type="text/javascript"):
-                doc.asis(read_text("datasheet.data", "positions.js"))
             with tag('style'):
                 doc.asis(read_text('datasheet.data', style_sheet))
                 if has_papaya:
@@ -129,7 +145,7 @@ def render_html(entries, outdir: Path, style_sheet: str = "default.css",
             if has_papaya:
                 doc.asis(papayaHelper.get_papaya_header())
             
-        with tag('body', onload="fixPosition();"):
+        with tag('body'):
             with tag('div', id="toc"):
                 line("div", "Contents", id="toc_header")
                 doc.asis(_make_toc(entries, max_index_len))

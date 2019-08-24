@@ -29,6 +29,7 @@ class ElementInterface:
     content: Any
     rel_save_path: Path = None
     _save_counter: ClassVar[int] = 0
+    dont_save: bool = False
 
     def get_outfile(self, target_dir: Path, ext: str):
         """returns a path for a file, that was not yet used.
