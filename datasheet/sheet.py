@@ -10,24 +10,38 @@ import pandas as pd
 from joblib import Memory
 from joblib.memory import MemorizedFunc
 
-from .html_renderer import render_html
+from .html_renderer import HTMLRenderer
 from .types import *
 
 
 class Sheet:
     """Main class of the library
 
-    :param str outdir: The output directory, in which all files are stored.
+    :param str out: The output directory or file.
+    :param bool standalone: 
+        If this option is set to `True` the output will be a single file,
+        In case of the HTMLRenderer that means images are encoded as base64 and
+        niftis are not supported as those can't be displayed without saving them.
     :var dict type_wrap_map: Defines the mapping from input types to 
         `ElementInterface` s. It is not possible to use tuple as key, as that will be
         ignored, because it is required for the special treatment the `MultiCell`
         Interface needs
     """
 
-    def __init__(self, outdir: str):
-        self.outdir = Path(outdir)
-        self.entries = []
-        self._mem = Memory(outdir, verbose=0)
+    def __init__(self, out_dir_or_file: str, standalone=False):
+        self.out = Path(out_dir_or_file)
+        self.entries = VLayout([])
+        self.standalone = standalone
+        self._mem_ob = None
+        
+    @property
+    def _mem(self):
+        if self.standalone:
+            raise RuntimeError(
+                "Using cache methods is not supported in standalone mode")
+        if not self._mem_ob:
+            self._mem_ob = Memory(self.out, verbose=0)
+        return self._mem_ob
 
     type_wrap_map = {
         str: MD,
@@ -36,36 +50,36 @@ class Sheet:
         matplotlib.figure.Figure: Figure
     }
 
-    @staticmethod
-    def _wrap_obj(obj):
-        return obj if isinstance(obj, ElementInterface) \
-            else Sheet.type_wrap_map.get(type(obj), Repr)(obj)
-
-    def _store_if_has_save_dir(self, obj):
-        if hasattr(obj, "save_to_dir") and not obj.dont_save:
-            obj.save_to_dir(self.outdir)
+    def _wrap_obj(self, obj):
+        if isinstance(obj, Layout):
+            return type(obj)([self._wrap_obj(elem)
+                              for elem in obj.elems])
+        elif not isinstance(obj, ElementInterface):
+            return Sheet.type_wrap_map.get(type(obj), Repr)(
+                obj, dont_save = self.standalone)
+        else:
+            return obj
 
     def __lshift__(self, obj: Any):
         """Object adding operator, automatically wraps passed objects into
         fitting type wrappers according to Sheet.type_wrap_map"""
-        if type(obj) in (MultiCell, tuple):
-            objs = obj.content if type(obj) == MultiCell else obj
-            wrapped_obj = MultiCell(tuple(map(Sheet._wrap_obj, objs)))
-            for obj in wrapped_obj.content:
-                self._store_if_has_save_dir(obj)
-        else:
-            wrapped_obj = Sheet._wrap_obj(obj)
+        wrapped_obj = self._wrap_obj(obj)
+        wrapped_obj.save_to_dir(self.out)
+        self.entries.elems.append(wrapped_obj)
 
-        self._store_if_has_save_dir(wrapped_obj)
-        self.entries.append(wrapped_obj)
-
-    def render(self, renderer=render_html):
+    def render(self, Renderer=HTMLRenderer, **kwargs):
         """Renders the sheet to some sort of file(s).
 
-        To customize render options use the renderfunction directly.
+        kwargs are passes to Renderer.render()
         Currently, the only existing renderer is the HTML renderer
         """
-        renderer(self.entries, self.outdir)
+        if self.standalone:
+            Renderer.render(self.entries, self.out.parent / 
+                            (self.out.name + '.' + Renderer.extension),
+                            **kwargs)
+        else:
+            Renderer.render(self.entries, self.out / Renderer.default_file,
+                            **kwargs)
 
     def cache(self, func, **cache_args) -> MemorizedFunc:
         """Datasheet automatically creates a 
@@ -105,6 +119,6 @@ class Sheet:
 
         :param bool clear: whether or not to clear the figue
         :param fig_args: forwarded to `Figure`"""
-        self << Figure(plt.gcf(), **fig_args)
+        self << Figure(plt.gcf(), dont_save=self.standalone, **fig_args)
         if clear:
             plt.clf()

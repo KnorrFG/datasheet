@@ -18,18 +18,18 @@ body {
   margin: auto;
   max-width: 70em;
   background: #fefefe;
+  display: flex;
 }
 
 #toc{
-    position: fixed;
+    position: sticky;
     top: 0;
     overflow-y: auto;
     overflow-x: hidden;
     height: 96%;
-    border-radius: 1em;
     padding: 0.5em;
     margin: 0.5em;
-    width: 15em;
+    flex-shrink: 0;
 }
 
 #toc a{
@@ -50,7 +50,7 @@ body {
 
 #container {
     top: 0;
-    margin-left: 15em;
+    /* margin-left: 15em; */
     margin-right: auto;
     max-width: 50em;
     border-radius: 0.5em;
@@ -58,6 +58,36 @@ body {
     padding-left: 1em;
 }
 
+.HLayout {
+    display: flex;
+    align-items: stretch;
+}
+
+.HLayout > div{
+  margin-left: 1em;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.HLayout > div:first-child {
+  margin-left: 0
+}
+
+.VLayout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.VLayout > div{
+  margin-top: 1em
+}
+
+.VLayout > div:first-child {
+  margin-top: 0
+}
 /* .entry{
     overflow-x: auto;
 } */
@@ -143,7 +173,7 @@ img {
 h1, h2, h3, h4, h5, h6 {
   color: #111;
   line-height: 125%;
-  margin-top: 2em;
+  margin-top: 1em;
   font-weight: normal;
 }
 
@@ -295,14 +325,14 @@ figcaption {
 }
 
 table {
-  margin-bottom: 2em;
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd;
   border-spacing: 0;
   border-collapse: collapse;
+  width: 100%;
 }
 
-table th {
+table th, table caption {
   padding: .2em 1em;
   background-color: #eee;
   border-top: 1px solid #ddd;

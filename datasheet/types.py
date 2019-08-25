@@ -1,9 +1,29 @@
 from dataclasses import dataclass, InitVar
-from typing import Any, ClassVar
+from typing import Any, ClassVar, List
 from pathlib import Path
+
+from io import BytesIO
+import base64
 
 def _map_lines(func, s):
     return "\n".join(map(func, s.split("\n")))
+
+
+@dataclass
+class Layout:
+    '''Base class for Layouts'''
+    elems: List[any]
+
+    def save_to_dir(self, out_dir):
+        for e in self.elems:
+            e.save_to_dir(out_dir)
+
+    def __iter__(self):
+        for elem in self.elems:
+            if isinstance(elem, Layout):
+                yield from elem
+            else:
+                yield elem
 
 
 @dataclass
@@ -13,8 +33,8 @@ class ElementInterface:
     To add an interface, 3 steps are neccessary:
     
     1. Define a class for it, which is derived from ElementInterface.
-        If it has a method named 'save_to_dir' which takes one argument: the
-        output directory, it will be called by 
+        If it has a method named '_save_to_dir' which takes one argument: the
+        output directory, it will be called during 
         `datasheet.sheet.Sheet.__lshift__`. This way it
         is possible to save files, that can be used in the render-handlers.
     2. Optionally define a mapping for a type to be wrapped automatically with
@@ -40,6 +60,11 @@ class ElementInterface:
             ElementInterface._save_counter += 1
             self.rel_save_path = f"{ElementInterface._save_counter}.{ext}"
         return target_dir / self.rel_save_path
+
+    def save_to_dir(self, out_dir):
+        if hasattr(self, '_save_to_dir') and not self.dont_save:
+            self._save_to_dir(out_dir)
+
 
 
 @dataclass
@@ -75,7 +100,7 @@ class DF(ElementInterface):
     """
     save_format: str = "tex"
 
-    def save_to_dir(self, target_dir):
+    def _save_to_dir(self, target_dir):
         out_file = self.get_outfile(target_dir, self.save_format)
         if self.save_format == "tex":
             out_file.write_text(self.content.to_latex(index=False))
@@ -87,9 +112,15 @@ class DF(ElementInterface):
 class Nifti(ElementInterface):
     """nibabel.Nifti1Image"""
 
-    def save_to_dir(self, target_dir):
+    def _save_to_dir(self, target_dir):
         out_file = self.get_outfile(target_dir, "nii")
         self.content.to_filename(str(out_file))
+    
+    def __post_init__(self):
+        if self.dont_save:
+            raise RuntimeError(
+                "Niftis cannot be used without saving, "
+                + "i.e. standalone cannot be used together with niftis")
 
 
 @dataclass
@@ -106,16 +137,29 @@ class Figure(ElementInterface):
     extension: str = "png"
     scale: float = 0.7
 
-    def save_to_dir(self, target_dir):
+    def _save_to_dir(self, target_dir):
         out_file = self.get_outfile(target_dir, self.extension)
         self.content.savefig(str(out_file), dpi=self.dpi, 
                              bbox_inches=self.bbox_inches,
                              transparent=self.transparent)
 
+    def __post_init__(self):
+        if not self.dont_save:
+            return
+        buffer = BytesIO()
+        self.content.savefig(buffer, dpi=self.dpi, 
+                             bbox_inches=self.bbox_inches,
+                             transparent=self.transparent,
+                             format=self.extension)
+        buffer.seek(0)
+        self.content = base64.b64encode(buffer.read()).decode()
 
 @dataclass
-class MultiCell(ElementInterface):
+class HLayout(Layout):
     """Allows to use multiple elements in a Row. Takes a tuple as argument"""
-    def __post_init__(self):
-        if type(self.content) != tuple:
-            raise ValueError("Content must be tuple")
+
+
+@dataclass
+class VLayout(Layout):
+    '''Allows to add multiple elements in a column.
+    Useful within a HLayout'''

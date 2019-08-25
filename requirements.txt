@@ -1,6 +1,0 @@
-markdown
-pandas
-yattag
-matplotlib
-nibabel
-joblib
