@@ -5,3 +5,4 @@
 **/.pytest_pycache
 **/.vscode
 dist
+.python-version

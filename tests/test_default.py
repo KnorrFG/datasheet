@@ -56,9 +56,6 @@ def test_2():
     cached_func.clear()
 
 
-if __name__ == "__main__":
-    test_1()
-
 def test_3():
     sheet = Sheet('test_out/standalone.html', standalone=True)
     plt.plot(range(10))
@@ -66,3 +63,11 @@ def test_3():
     with pytest.raises(RuntimeError):
         sheet << nib.load('tests/foo.nii')
     sheet.render()
+
+
+def test_gated_cache():
+    sheet = Sheet('test_out')
+    gated_compute_table = sheet.gate_cache(compute_table, False)
+    foo = gated_compute_table(10)
+    bar = gated_compute_table(21)
+    assert foo.equals(bar)

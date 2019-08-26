@@ -99,8 +99,8 @@ class Sheet:
         the key parameter determines the save file. By default the name of the wrapped
         function is used. In case of wanting to save multiple results for one function,
         it can be wrapped multiple times with different keys"""
-        self.outdir.joinpath("gate_cache").mkdir(parents=True, exist_ok=True)
-        save_path = self.outdir/"gate_cache"/((key or func.__name__) + ".pkl")
+        self.out.joinpath("gate_cache").mkdir(parents=True, exist_ok=True)
+        save_path = self.out/"gate_cache"/((key or func.__name__) + ".pkl")
         @wraps(func)
         def gated_func(*args, **kwargs):
             if recompute or not save_path.exists():
