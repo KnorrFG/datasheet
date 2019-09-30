@@ -329,6 +329,7 @@ table {
   border-right: 1px solid #ddd;
   border-spacing: 0;
   border-collapse: collapse;
+  width: 100%;
 }
 
 table th, table caption {
