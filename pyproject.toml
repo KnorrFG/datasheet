@@ -14,5 +14,5 @@ requires = [
     "yattag", 
     "matplotlib", 
     "nibabel", 
-    "joblib"]
+    "jum"]
 description-file="README.rst"

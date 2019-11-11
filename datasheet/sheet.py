@@ -7,8 +7,7 @@ import matplotlib.figure
 import matplotlib.pyplot as plt
 import nibabel as nib
 import pandas as pd
-from joblib import Memory
-from joblib.memory import MemorizedFunc
+import jum
 
 from .html_renderer import HTMLRenderer
 from .types import *
@@ -40,7 +39,7 @@ class Sheet:
             raise RuntimeError(
                 "Using cache methods is not supported in standalone mode")
         if not self._mem_ob:
-            self._mem_ob = Memory(self.out, verbose=0)
+            self._mem_ob = jum.cache(self.out)
         return self._mem_ob
 
     type_wrap_map = {
@@ -81,12 +80,10 @@ class Sheet:
             Renderer.render(self.entries, self.out / Renderer.default_file,
                             **kwargs)
 
-    def cache(self, func, **cache_args) -> MemorizedFunc:
-        """Datasheet automatically creates a 
-        `joblib.Memory <https://joblib.readthedocs.io/en/latest/auto_examples/memory_basic_usage.html>`_
-        object, with the outdir as cache dir, to have easy access to persistent
-        caching. This method exposes the memory-object's cache() method."""
-        return self._mem.cache(func, **cache_args)
+    def cache(self, func, **cache_args):
+        """Returns a function that is cached by 
+        `jum <https://github.com/phizaz/jum>`_"""
+        return self._mem(func)
 
     def gate_cache(self, func, recompute, key=None):
         """Wraps a function. The returned function will execute the wrapped function 

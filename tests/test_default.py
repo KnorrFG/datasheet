@@ -49,13 +49,6 @@ def test_1():
     sheet << nib.load("tests/foo.nii")
     sheet.render()
 
-
-def test_2():
-    sheet = Sheet("test_out")
-    cached_func = sheet.cache(compute_table)
-    cached_func.clear()
-
-
 def test_3():
     sheet = Sheet('test_out/standalone.html', standalone=True)
     plt.plot(range(10))
