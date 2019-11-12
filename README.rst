@@ -1,5 +1,7 @@
 Doc at `readthedocs <https://datasheet.readthedocs.io>`_
 
+* Version 1.1.2
+   * Has a new css template for pathfinder
 * Version 1.1.1
    * Fixes a bug in gated cache, that wasn't caught by a test before (sorry)
 * Version 1.1.0
