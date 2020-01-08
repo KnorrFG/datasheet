@@ -29,6 +29,11 @@ class Sheet:
 
     def __init__(self, out_dir_or_file: str, standalone=False):
         self.out = Path(out_dir_or_file)
+        if standalone:
+            self.out.parent.mkdir(parents=True, exist_ok=True)
+        else:
+            self.out.mkdir(parents=True, exist_ok=True)
+
         self.entries = VLayout([])
         self.standalone = standalone
         self._mem_ob = None

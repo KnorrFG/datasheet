@@ -1,5 +1,7 @@
 Doc at `readthedocs <https://datasheet.readthedocs.io>`_
 
+* Version 1.1.3
+   * Automatically creates containing folder on instantiation
 * Version 1.1.2
    * Has a new css template for pathfinder
 * Version 1.1.1
