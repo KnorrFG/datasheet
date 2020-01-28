@@ -65,7 +65,8 @@ class _PapayaHelper:
 
 def _render_multicell(cell, transformers):
     doc, tag, text = Doc().tagtext()
-    with tag("div", style="display: flex; flex-direction: row; margin: 10px 0;"):
+    with tag("div",
+             style="display: flex; flex-direction: row; margin: 10px 0;"):
         for entry in cell.content:
             with tag('div', klass='entry'):
                 doc.asis(transformers[type(entry)](entry))
@@ -86,7 +87,8 @@ def _make_toc(entries, max_index_len):
         level = re.search(r"[^#]", line).start()
         with tag("div", klass=f"indexindent_{level}"):
             link_text = line[level:] if len(line) < max_index_len \
-                or max_index_len == 0 else (line[level: max_index_len - 3] + "...")
+                or max_index_len == 0 else\
+                (line[level: max_index_len - 3] + "...")
             doc.line("a", link_text, href=f"#{i}")
     return indent(doc.getvalue())
 
@@ -137,7 +139,8 @@ class HTMLRenderer:
         _transformers = {
             DF: lambda s: s.content._repr_html_(),
             Figure: _figure_to_html,
-            MD: lambda s: header_parser.get_header(s) if _is_single_line_md_heading(s)
+            MD: lambda s: header_parser.get_header(s)
+                if _is_single_line_md_heading(s)
                 else markdown(s.content, extensions=markdown_extensions),
             Nifti: None,
             Repr: lambda s: _print_to_html(repr(s.content)),
@@ -160,7 +163,8 @@ class HTMLRenderer:
                 with tag('style'):
                     doc.asis(read_text('datasheet.data', style_sheet))
                     if has_papaya:
-                        doc.asis(read_text("datasheet.data", "papaya_css_additions.txt"))
+                        doc.asis(read_text("datasheet.data",
+                                           "papaya_css_additions.txt"))
                 if has_papaya:
                     doc.asis(papayaHelper.get_papaya_header())
                 
