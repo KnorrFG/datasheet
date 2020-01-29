@@ -1,5 +1,8 @@
 Doc at `readthedocs <https://datasheet.readthedocs.io>`_
 
+* Version 1.2.0
+  * Adds a new Feature: Headings (only those that also show up in the
+    TOC) can now be clicked to hide their contents
 * Version 1.1.3
    * Automatically creates containing folder on instantiation
 * Version 1.1.2

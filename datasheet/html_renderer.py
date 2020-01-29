@@ -61,7 +61,7 @@ class _PapayaHelper:
         res = f'<div class="papaya" data-params="param{self.called}"></div>'
         self.called += 1
         return res
-    
+
 
 def _render_multicell(cell, transformers):
     doc, tag, text = Doc().tagtext()
@@ -71,7 +71,7 @@ def _render_multicell(cell, transformers):
             with tag('div', klass='entry'):
                 doc.asis(transformers[type(entry)](entry))
             doc.asis("&emsp;")
-        
+
     return doc.getvalue()
 
 
@@ -95,14 +95,29 @@ def _make_toc(entries, max_index_len):
 
 def _layout_to_html(transformers, layout):
     doc, tag, text = Doc().tagtext()
-    with tag('div', klass=type(layout).__name__):
-        for entry in layout.elems:
-            if isinstance(entry, Layout):
+
+    def inner(elems):
+        if len(elems) == 0:
+            return indent(doc.getvalue())
+        entry = elems[0]
+        if _is_single_line_md_heading(entry):
+            doc.asis(transformers[type(entry)](entry))
+            with tag('div', klass='collapsable'):
+                doc.asis(_layout_to_html(transformers, VLayout(elems[1])))
+            return inner(elems[2:])
+        elif isinstance(entry, Layout):
+            with tag('div', klass=type(entry).__name__):
                 doc.asis(_layout_to_html(transformers, entry))
-            else:
-                with tag('div', klass='entry'):
-                    doc.asis(transformers[type(entry)](entry))
-    return indent(doc.getvalue())
+        else:
+            with tag('div', klass='entry'):
+                doc.asis(transformers[type(entry)](entry))
+        return inner(elems[1:])
+
+    return inner(layout.elems)
+
+
+def _get_h_indention_lvl(s: str) -> int:
+    return re.search(r"[^#]", s).start()
 
 
 @dataclass
@@ -112,11 +127,35 @@ class _MDHeaderMaker:
     def get_header(self, entry):
         doc = Doc()
         line = entry.content.strip()
-        level = re.search(r"[^#]", line).start()
+        level = _get_h_indention_lvl(line)
         text = line[level:]
-        doc.line(f'h{level}', text, id=str(self.counter))
+        doc.line(f'h{level}', "\u2798" + text,
+                 id=str(self.counter), klass='hdr')
         self.counter += 1
         return doc.getvalue()
+
+
+def _group_heading_contents(entries, handled_entries):
+    if len(entries) == 0:
+        return handled_entries
+    elif not _is_single_line_md_heading(entries[0]):
+        return _group_heading_contents(entries[1:],
+                                  handled_entries + [entries[0]])
+    else:
+        try:
+            current_lvl = _get_h_indention_lvl(entries[0].content.strip())
+            next_header_idx = next(i for i, e in enumerate(entries[1:])
+                                    if _is_single_line_md_heading(e)
+                                    and _get_h_indention_lvl(e.content.strip())
+                                        == current_lvl) + 1
+            content = entries[1:next_header_idx]
+            tail = entries[next_header_idx:]
+        except StopIteration:
+            content = entries[1:]
+            tail = []
+
+        return _group_heading_contents(tail, handled_entries + [entries[0]] +
+                                  [_group_heading_contents(content, [])])
 
 
 class HTMLRenderer:
@@ -167,11 +206,15 @@ class HTMLRenderer:
                                            "papaya_css_additions.txt"))
                 if has_papaya:
                     doc.asis(papayaHelper.get_papaya_header())
-                
+
             with tag('body'):
                 with tag('div', id="toc"):
                     line("div", "Contents", id="toc_header")
                     doc.asis(_make_toc(entries, max_index_len))
                 with tag('div', id='container'):
-                    doc.asis(_layout_to_html(_transformers, entries))
+                    doc.asis(_layout_to_html(
+                        _transformers,
+                        VLayout(_group_heading_contents(entries.elems, []))))
+                with tag('script'):
+                    doc.asis(read_text('datasheet.data', 'collapse.js'))
         Path(out_file).write_text(indent(doc.getvalue()))
