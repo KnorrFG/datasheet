@@ -1,5 +1,7 @@
 Doc at `readthedocs <https://datasheet.readthedocs.io>`_
 
+* Version 1.2.1
+    * Fixes a bug, that caused a crash if an empty string was provided as md
 * Version 1.2.0
    * Adds a new Feature: Headings (only those that also show up in the
 	TOC) can now be clicked to hide their contents

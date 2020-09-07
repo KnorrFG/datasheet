@@ -77,6 +77,9 @@ class MD(ElementInterface):
     offset: InitVar[int] = -1
 
     def __post_init__(self, offset):
+        if self.content == "":
+            return 
+
         if offset < 0:
             offset = min(len(line) - len(line.lstrip())
                          for line in self.content.split("\n") if len(line.strip()) > 0)
