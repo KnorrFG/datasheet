@@ -1,9 +1,9 @@
 Datasheet
 ---------
 
-Datasheet is a Python package that attempts to provide you the advantages of a Jupyter Notebook
-without the disadvantages. It generates html files for you that look somewhat similar to
-a notebook without the Code in it. You can add matplotlib grpahs, markdown text, pandas tables
+Datasheet is a Python package that attempts to provide the advantages of a Jupyter Notebook
+without the disadvantages. It generates html files that look somewhat similar to
+a notebook without the code in it. You can add matplotlib graphs, markdown text, pandas tables
 and nifti images with a single line, and get a nice output. For everything else the :code:`repr()`
 function is used. Additionally, some simple layouting is supported.
 
