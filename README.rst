@@ -1,4 +1,17 @@
-Doc at `readthedocs <https://datasheet.readthedocs.io>`_
+Datasheet
+---------
+
+Datasheet is a Python package that attempts to provide you the advantages of a Jupyter Notebook
+without the disadvantages. It generates html files for you that look somewhat similar to
+a notebook without the Code in it. You can add matplotlib grpahs, markdown text, pandas tables
+and nifti images with a single line, and get a nice output. For everything else the :code:`repr()`
+function is used. Additionally, some simple layouting is supported.
+
+For an example of such a report, take a look at `the example report <doc/source/_static/test_out/index.html>`_  
+A complete documentation can be found `here <https://datasheet.readthedocs.io>`_
+
+Changelog
+---------
 
 * Version 1.2.1
     * Fixes a bug, that caused a crash if an empty string was provided as md

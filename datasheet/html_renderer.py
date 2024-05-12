@@ -159,6 +159,7 @@ def _group_heading_contents(entries, handled_entries):
 
 
 class HTMLRenderer:
+    """The Default renderer, that renders to HTML"""
     default_file = 'index.html'
     extension = 'html'
 

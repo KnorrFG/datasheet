@@ -1,24 +1,24 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Welcome to datasheet’s documentation! &#8212; datasheet  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -30,8 +30,8 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-datasheet-s-documentation">
-<h1>Welcome to datasheet’s documentation!<a class="headerlink" href="#welcome-to-datasheet-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <section id="welcome-to-datasheet-s-documentation">
+<h1>Welcome to datasheet’s documentation!<a class="headerlink" href="#welcome-to-datasheet-s-documentation" title="Link to this heading">¶</a></h1>
 <p>Datasheet is a small library that aims to make it as easy as possible
 to generate nice, usable output files containing all sorts of information
 that might fall out of a scientific python script.
@@ -61,18 +61,17 @@ result, and only recompute if it is explicitly told to do so.</p>
 </div>
 <p>Here is an example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasheet</span> <span class="kn">import</span> <span class="n">Sheet</span><span class="p">,</span> <span class="n">Repr</span><span class="p">,</span> <span class="n">Str</span><span class="p">,</span> <span class="n">MD</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">sheet</span> <span class="o">=</span> <span class="n">Sheet</span><span class="p">(</span><span class="s2">&quot;./test_out&quot;</span><span class="p">)</span>
     <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;# Test Title&quot;</span>
     <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    The Reason that the title wasn&#39;t added as part of this</span>
-<span class="s2">    multiline string is that if you add a sinle line string which</span>
+<span class="s2">    The reason that the title wasn&#39;t added as part of this</span>
+<span class="s2">    multi line string is that if you add a sinle line string which</span>
 <span class="s2">    contains a title, it will get an index entry.</span>
 
 <span class="s2">    * With Bulletpoints</span>
@@ -86,27 +85,25 @@ result, and only recompute if it is explicitly told to do so.</p>
     <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;## And the same string printed&quot;</span>
     <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="n">Str</span><span class="p">(</span><span class="n">raw_str</span><span class="p">)</span>
     <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;## A Pandas table&quot;</span>
-    <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;With a little demonstration of caching.&quot;</span>
+    <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        With a little demonstration of caching.</span>
+<span class="s2">        (And this will be indented identically to the last MD Code</span>
+<span class="s2">        Because there is auto indent detection)&quot;&quot;&quot;</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">cache</span><span class="p">(</span><span class="n">compute_table</span><span class="p">)(</span><span class="mi">20</span><span class="p">)</span>
-    <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        And Some *nice* MD comments Next to it.</span>
-
-<span class="sd">        This can be achieved by adding a tuple.</span>
-
-<span class="sd">        Btw. There also is another caching-method,</span>
-<span class="sd">        the gated cache, which can be usefull if you want to</span>
-<span class="sd">        prevent some recomputations that will happen with the</span>
-<span class="sd">        normal cache&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="n">HLayout</span><span class="p">((</span><span class="n">table</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        And Some *nice* MD comments Next to it.</span>
+<span class="s2">        There is also a second type of cache, which you can access</span>
+<span class="s2">        vial the gated_cache() method. But it&#39;s not used here.</span>
+<span class="s2">        It is handy if you want to prevent recomputation under certain</span>
+<span class="s2">        circumstances&quot;&quot;&quot;</span><span class="p">))</span>
     <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;### The Latex code:&quot;</span>
-    <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="n">Str</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
+    <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="n">Str</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
     <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;## A Matplotlib figure&quot;</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">table</span><span class="p">[</span><span class="s2">&quot;x-sq&quot;</span><span class="p">])</span>
     <span class="n">sheet</span><span class="o">.</span><span class="n">add_current_figure</span><span class="p">()</span>
     <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;## We even have a nifti viewer&quot;</span>
-    <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="n">make_nifti</span><span class="p">()</span>
+    <span class="n">sheet</span> <span class="o">&lt;&lt;</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;tests/foo.nii&quot;</span><span class="p">)</span>
     <span class="n">sheet</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
-
 
 <span class="k">def</span> <span class="nf">compute_table</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -134,7 +131,7 @@ result, and only recompute if it is explicitly told to do so.</p>
 </div>
 <p>which will produce the following html file:</p>
 <iframe src="_static/test_out/index.html" height="1000em" width="100%"></iframe><p>You can find the details in the <a class="reference internal" href="api.html"><span class="doc">Api Documentation</span></a></p>
-</div>
+</section>
 
 
           </div>
@@ -148,11 +145,11 @@ result, and only recompute if it is explicitly told to do so.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, Felix G. Knorr.
+      &#169;2019, Felix G. Knorr.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
       |
       <a href="_sources/index.rst.txt"

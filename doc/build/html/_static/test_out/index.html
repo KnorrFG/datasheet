@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>index</title>
+    <title>test_out</title>
     <meta charset="UTF-8" />
     <style>/*
  * I add this to html files generated with pandoc.
@@ -22,18 +22,18 @@ body {
   margin: auto;
   max-width: 70em;
   background: #fefefe;
-  display: flex;
 }
 
 #toc{
-    position: sticky;
+    position: fixed;
     top: 0;
     overflow-y: auto;
     overflow-x: hidden;
     height: 96%;
+    border-radius: 1em;
     padding: 0.5em;
     margin: 0.5em;
-    flex-shrink: 0;
+    width: 15em;
 }
 
 #toc a{
@@ -54,44 +54,14 @@ body {
 
 #container {
     top: 0;
-    /* margin-left: 15em; */
+    margin-left: 15em;
     margin-right: auto;
     max-width: 50em;
     border-radius: 0.5em;
-    /* padding: 0.5em; */
+    padding: 0.5em;
     padding-left: 1em;
 }
 
-.HLayout {
-    display: flex;
-    align-items: stretch;
-}
-
-.HLayout > div{
-  margin-left: 1em;
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
-.HLayout > div:first-child {
-  margin-left: 0
-}
-
-.VLayout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    flex-grow: 1;
-    flex-shrink: 1;
-}
-
-.VLayout > div{
-  margin-top: 1em
-}
-
-.VLayout > div:first-child {
-  margin-top: 0
-}
 /* .entry{
     overflow-x: auto;
 } */
@@ -167,7 +137,7 @@ a::selection {
 }
 
 p {
-  margin: 0 0;
+  margin: 1em 0;
 }
 
 img {
@@ -177,7 +147,7 @@ img {
 h1, h2, h3, h4, h5, h6 {
   color: #111;
   line-height: 125%;
-  margin-top: 1em;
+  margin-top: 2em;
   font-weight: normal;
 }
 
@@ -329,14 +299,14 @@ figcaption {
 }
 
 table {
+  margin-bottom: 2em;
   border-bottom: 1px solid #ddd;
   border-right: 1px solid #ddd;
   border-spacing: 0;
   border-collapse: collapse;
-  width: 100%;
 }
 
-table th, table caption {
+table th {
   padding: .2em 1em;
   background-color: #eee;
   border-top: 1px solid #ddd;
@@ -4188,47 +4158,44 @@ papaya.Container.prototype.canCurrentOverlayModulate=function(){var a=this.viewe
       </div>
     </div>
     <div id="container">
-      <div class="VLayout">
-        <div class="entry">
-          <h1 id="0"> Test Title</h1>
-        </div>
-        <div class="entry">
-          <p>The reason that the title wasn&rsquo;t added as part of this
-multi line string is that if you add a sinle line string which 
+      <div class="entry">
+        <h1 id="0"> Test Title</h1>
+      </div>
+      <div class="entry">
+        <p>The reason that the title wasn&rsquo;t added as part of this<br />
+multi line string is that if you add a sinle line string which <br />
 contains a title, it will get an index entry.</p>
-          <ul>
-            <li>With Bulletpoints</li>
-            <li>One more</li>
-          </ul>
-          <p>
-            <code>And Some *RAW* MD Code</code>
-          </p>
-        </div>
-        <div class="entry">
-          <h2 id="1"> Next we have a Raw-String representation</h2>
-        </div>
-        <div class="entry">
-          <pre>'Hello\nWorld'</pre>
-        </div>
-        <div class="entry">
-          <h2 id="2"> And the same string printed</h2>
-        </div>
-        <div class="entry">
-          <pre>Hello
+        <ul>
+          <li>With Bulletpoints</li>
+          <li>One more</li>
+        </ul>
+        <p>
+          <code>And Some *RAW* MD Code</code>
+        </p>
+      </div>
+      <div class="entry">
+        <h2 id="1"> Next we have a Raw-String representation</h2>
+      </div>
+      <div class="entry">
+        <pre>'Hello\nWorld'</pre>
+      </div>
+      <div class="entry">
+        <h2 id="2"> And the same string printed</h2>
+      </div>
+      <div class="entry">
+        <pre>Hello
 World</pre>
-        </div>
-        <div class="entry">
-          <h2 id="3"> A Pandas table</h2>
-        </div>
-        <div class="entry">
-          <p>With a little demonstration of caching.
-(And this will be indented identically to the last MD Code
+      </div>
+      <div class="entry">
+        <h2 id="3"> A Pandas table</h2>
+      </div>
+      <div class="entry">
+        <p>With a little demonstration of caching.<br />
+(And this will be indented identically to the last MD Code<br />
 Because there is auto indent detection)</p>
-        </div>
-        <div class="HLayout">
-          <div class="entry">
-            <div>
-              <style scoped>
+      </div>
+      <div class="entry">
+        <div style="display: flex; flex-direction: row; margin: 10px 0;"><div class="entry"><div><style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -4240,58 +4207,17 @@ Because there is auto indent detection)</p>
     .dataframe thead th {
         text-align: right;
     }
-</style>
-              <table border="1" class="dataframe">
-                <thead>
-                  <tr style="text-align: right;">
-                    <th></th>
-                    <th>x</th>
-                    <th>x-sq</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>4</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>9</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>16</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="entry">
-            <p>And Some <em>nice</em> MD comments Next to it.
-There is also a second type of cache, which you can access
-vial the gated_cache() method. But it&rsquo;s not used here.
-It is handy if you want to prevent recomputation under certain 
-circumstances</p>
-          </div>
-        </div>
-        <div class="entry">
-          <h3 id="4"> The Latex code:</h3>
-        </div>
-        <div class="entry">
-          <pre>\begin{tabular}{rr}
+</style><table border="1" class="dataframe"><thead><tr style="text-align: right;"><th></th><th>x</th><th>x-sq</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td></tr><tr><td>2</td><td>2</td><td>4</td></tr><tr><td>3</td><td>3</td><td>9</td></tr><tr><td>4</td><td>4</td><td>16</td></tr></tbody></table></div></div>&emsp;<div class="entry"><p>And Some <em>nice</em> MD comments Next to it.<br />
+There is also a second type of cache, which you can access<br />
+vial the gated_cache() method. But it&rsquo;s not used here.<br />
+It is handy if you want to prevent recomputation under certain <br />
+circumstances</p></div>&emsp;</div>
+      </div>
+      <div class="entry">
+        <h3 id="4"> The Latex code:</h3>
+      </div>
+      <div class="entry">
+        <pre>\begin{tabular}{rr}
 \toprule
   x &amp;  x-sq \\
 \midrule
@@ -4318,19 +4244,18 @@ circumstances</p>
 \bottomrule
 \end{tabular}
 </pre>
-        </div>
-        <div class="entry">
-          <h2 id="5"> A Matplotlib figure</h2>
-        </div>
-        <div class="entry">
-          <img src="2.png" width="70.0%" />
-        </div>
-        <div class="entry">
-          <h2 id="6"> We even have a nifti viewer</h2>
-        </div>
-        <div class="entry">
-          <div class="papaya" data-params="param0"></div>
-        </div>
+      </div>
+      <div class="entry">
+        <h2 id="5"> A Matplotlib figure</h2>
+      </div>
+      <div class="entry">
+        <img src="2.png" width="70.0%" />
+      </div>
+      <div class="entry">
+        <h2 id="6"> We even have a nifti viewer</h2>
+      </div>
+      <div class="entry">
+        <div class="papaya" data-params="param0"></div>
       </div>
     </div>
   </body>
