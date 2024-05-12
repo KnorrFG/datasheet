@@ -7,8 +7,8 @@ a notebook without the Code in it. You can add matplotlib grpahs, markdown text,
 and nifti images with a single line, and get a nice output. For everything else the :code:`repr()`
 function is used. Additionally, some simple layouting is supported.
 
-For an example of such a report, take a look at `the example report <doc/source/_static/test_out/index.html>`_  
-A complete documentation can be found `here <https://datasheet.readthedocs.io>`_
+The documentation, which includes an example of a generated report can be found 
+`here <https://datasheet.readthedocs.io>`_
 
 Changelog
 ---------
