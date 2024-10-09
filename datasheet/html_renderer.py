@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-from importlib.resources import read_text
 from pathlib import Path
 from typing import List
 import re
+from importlib.resources import files
 
 from markdown import markdown
 from pandas import DataFrame
@@ -42,25 +42,6 @@ def _figure_to_html(fig: Figure):
     else:
         doc.stag('img', src=f'data:image/{fig.extension};base64,{fig.content}')
     return doc.getvalue()
-
-
-@dataclass
-class _PapayaHelper:
-    niftis: List[Nifti]
-    called: int = 0
-
-    def get_papaya_header(self):
-        return read_text('datasheet.data', "papaya_header.html") \
-            + '<script type="text/javascript">' + ";".join(
-            [f'var param{i} = {{"images": ["./{nii.rel_save_path}"]}}'
-            for i, nii in enumerate(self.niftis)]
-            ) + '</script>' + '<script type="text/javascript">' + \
-            read_text("datasheet.data", "papaya.js") + '</script>'
-
-    def __call__(self, nii: Nifti):
-        res = f'<div class="papaya" data-params="param{self.called}"></div>'
-        self.called += 1
-        return res
 
 
 def _render_multicell(cell, transformers):
@@ -182,18 +163,9 @@ class HTMLRenderer:
             MD: lambda s: header_parser.get_header(s)
                 if _is_single_line_md_heading(s)
                 else markdown(s.content, extensions=markdown_extensions),
-            Nifti: None,
             Repr: lambda s: _print_to_html(repr(s.content)),
             Str: lambda s: _print_to_html(s.content)
         }
-
-        if any(type(entry) == Nifti for entry in entries):
-            papayaHelper = _PapayaHelper(
-                [entry for entry in entries if type(entry) == Nifti])
-            _transformers[Nifti] = papayaHelper
-            has_papaya = True
-        else:
-            has_papaya = False
 
         doc, tag, text, line = Doc().ttl()
         with tag('html'):
@@ -202,11 +174,6 @@ class HTMLRenderer:
                 doc.stag("meta", charset="UTF-8")
                 with tag('style'):
                     doc.asis(read_text('datasheet.data', style_sheet))
-                    if has_papaya:
-                        doc.asis(read_text("datasheet.data",
-                                           "papaya_css_additions.txt"))
-                if has_papaya:
-                    doc.asis(papayaHelper.get_papaya_header())
 
             with tag('body'):
                 with tag('div', id="toc"):
@@ -219,3 +186,7 @@ class HTMLRenderer:
                 with tag('script'):
                     doc.asis(read_text('datasheet.data', 'collapse.js'))
         Path(out_file).write_text(indent(doc.getvalue()))
+
+def read_text(mod, file):
+    return (files(mod) / file).read_text('utf-8')
+    

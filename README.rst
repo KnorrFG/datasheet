@@ -13,6 +13,11 @@ The documentation, which includes an example of a generated report can be found
 Changelog
 ---------
 
+* Version 1.2.2
+	* Removes nifti support, as browsers don't permit loading it anymore without a server,
+	  which defeats the purpose
+	* Updates the example
+	* adds jinja2 dependency as this appears to be neccessary now
 * Version 1.2.1
     * Fixes a bug, that caused a crash if an empty string was provided as md
 * Version 1.2.0

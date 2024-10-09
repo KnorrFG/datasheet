@@ -112,21 +112,6 @@ class DF(ElementInterface):
             
 
 @dataclass
-class Nifti(ElementInterface):
-    """nibabel.Nifti1Image"""
-
-    def _save_to_dir(self, target_dir):
-        out_file = self.get_outfile(target_dir, "nii")
-        self.content.to_filename(str(out_file))
-    
-    def __post_init__(self):
-        if self.dont_save:
-            raise RuntimeError(
-                "Niftis cannot be used without saving, "
-                + "i.e. standalone cannot be used together with niftis")
-
-
-@dataclass
 class Figure(ElementInterface):
     """matplotlib.pyplot.figure
     

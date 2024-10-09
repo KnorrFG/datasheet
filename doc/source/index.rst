@@ -82,8 +82,6 @@ Here is an example:
         sheet << "## A Matplotlib figure"
         plt.plot(table.x, table["x-sq"])
         sheet.add_current_figure()
-        sheet << "## We even have a nifti viewer"
-        sheet << nib.load("tests/foo.nii")
         sheet.render()
 
     def compute_table(x):

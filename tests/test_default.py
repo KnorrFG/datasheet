@@ -1,4 +1,4 @@
-from datasheet import Sheet, Repr, Str, MD, HLayout
+from datasheet import Sheet, Repr, Str, VLayout, HLayout
 import pandas as pd
 import matplotlib.pyplot as plt
 import nibabel as nib
@@ -45,16 +45,12 @@ def test_1():
     sheet << "## A Matplotlib figure"
     plt.plot(table.x, table["x-sq"])
     sheet.add_current_figure()
-    sheet << "## We even have a nifti viewer"
-    sheet << nib.load("tests/foo.nii")
     sheet.render()
 
 def test_3():
     sheet = Sheet('test_out/standalone.html', standalone=True)
     plt.plot(range(10))
     sheet.add_current_figure()
-    with pytest.raises(RuntimeError):
-        sheet << nib.load('tests/foo.nii')
     sheet.render()
 
 
@@ -64,3 +60,7 @@ def test_gated_cache():
     foo = gated_compute_table(10)
     bar = gated_compute_table(21)
     assert foo.equals(bar)
+
+
+if __name__ == "__main__":
+    test_1()

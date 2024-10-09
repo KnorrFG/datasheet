@@ -13,6 +13,6 @@ requires = [
     "pandas", 
     "yattag", 
     "matplotlib", 
-    "nibabel", 
-    "jum"]
+    "jum",
+    "Jinja2"]
 description-file="README.rst"

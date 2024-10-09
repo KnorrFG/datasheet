@@ -19,8 +19,7 @@ class Sheet:
     :param str out: The output directory or file.
     :param bool standalone: 
         If this option is set to `True` the output will be a single file,
-        In case of the HTMLRenderer that means images are encoded as base64 and
-        niftis are not supported as those can't be displayed without saving them.
+        In case of the HTMLRenderer that means images are encoded as base64.
     :var dict type_wrap_map: Defines the mapping from input types to 
         `ElementInterface` s. It is not possible to use tuple as key, as that will be
         ignored, because it is required for the special treatment the `MultiCell`
@@ -50,7 +49,6 @@ class Sheet:
     type_wrap_map = {
         str: MD,
         pd.DataFrame: DF,
-        nib.Nifti1Image: Nifti,
         matplotlib.figure.Figure: Figure
     }
 
