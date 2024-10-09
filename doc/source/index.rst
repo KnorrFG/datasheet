@@ -40,7 +40,7 @@ Here is an example:
 
 .. code-block:: python
 
-    from datasheet import Sheet, Repr, Str,HLayout
+    from datasheet import Sheet, Repr, Str, HLayout
     import pandas as pd
     import matplotlib.pyplot as plt
     import nibabel as nib
