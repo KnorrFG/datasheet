@@ -13,7 +13,6 @@ The output is stored as html page. To a sheet you can easily add
 
 * Strings containing Markdown "code"
 * Pandas DataFrames
-* Nibabel nifti images
 * Matplotlib figures
 
 with a single line. Think jupyter without source-code. To give a similar
@@ -93,15 +92,6 @@ Here is an example:
 
     def gaussian(x, mu, sig):
         return np.exp(-np.power(x - mu, 2.) / (2 * np.power(sig, 2.)))
-
-
-    def make_nifti():
-        shape = np.array((50, 50, 50))
-        dists = np.ones(shape)
-        center = np.array((25, 25, 25))
-        for index in np.ndindex(*shape):
-            dists[index] = np.sqrt(np.sum((index - center) ** 2))
-        return nib.Nifti1Image(gaussian(dists, 0, 10), np.eye(4))
 
 
     if __name__ == "__main__":
