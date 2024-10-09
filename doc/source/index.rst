@@ -43,8 +43,6 @@ Here is an example:
     from datasheet import Sheet, Repr, Str, HLayout
     import pandas as pd
     import matplotlib.pyplot as plt
-    import nibabel as nib
-    import numpy as np
 
     def main():
         sheet = Sheet("./test_out")
