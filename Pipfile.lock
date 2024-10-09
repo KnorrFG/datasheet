@@ -555,15 +555,6 @@
             "markers": "python_version >= '3.9'",
             "version": "==3.9.2"
         },
-        "nibabel": {
-            "hashes": [
-                "sha256:2cbbc22985f7f9d39d050df47249771dfb8d48447f5e7a993177e4cabfe047f0",
-                "sha256:b6c80b2e728e4bc2b65f1142d9b8d2287a9102a8bf8477e115ef0d8334559975"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '3.8'",
-            "version": "==5.2.1"
-        },
         "numpy": {
             "hashes": [
                 "sha256:05b2d4e667895cc55e3ff2b56077e4c8a5604361fc21a042845ea3ad67465aa8",

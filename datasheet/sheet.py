@@ -5,7 +5,6 @@ import matplotlib
 matplotlib.use('agg')
 import matplotlib.figure
 import matplotlib.pyplot as plt
-import nibabel as nib
 import pandas as pd
 import jum
 

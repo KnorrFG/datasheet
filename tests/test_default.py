@@ -1,7 +1,6 @@
 from datasheet import Sheet, Repr, Str, VLayout, HLayout
 import pandas as pd
 import matplotlib.pyplot as plt
-import nibabel as nib
 import pytest
 
 def compute_table(x):

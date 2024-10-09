@@ -16,7 +16,6 @@ kiwisolver==1.4.5
 Markdown==3.6
 MarkupSafe==2.1.5
 matplotlib==3.8.4
-nibabel==5.2.1
 numpy==1.26.4
 packaging==24.0
 pandas==2.2.2
